@@ -1,4 +1,5 @@
 import React from "react";
+import Message from "./Message";
 
 const Contact = () => {
   return (
@@ -53,9 +54,7 @@ const Contact = () => {
                   rows="3"
                 ></textarea>
               </div>
-              <button type="submit" class="btn btn-outline-primary">
-                Send Message
-              </button>
+              <Message label={"Send Message"} toastMessage={"Messge Sent"} />
             </form>
           </div>
         </div>

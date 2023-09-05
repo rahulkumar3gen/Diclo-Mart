@@ -1,10 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Login from "./Login";
-import Signup from "./Signup";
+
 import CartBtn from "./CartBtn";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = () => {
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,11 +47,33 @@ const Header = () => {
                 </NavLink>
               </li>
             </ul>
+
             <NavLink className="navbar-brand mx-auto fw-bold" to="/">
-              DICLO MART
+              <p style={{ color: "orangered" }}>DICLO MART</p>
             </NavLink>
-            <Login />
-            <Signup />
+
+            {isAuthenticated && <p>{user.name}</p>}
+
+            {isAuthenticated ? (
+              <button
+                className="btn btn-outline-primary ms-2"
+                onClick={() =>
+                  logout({ logoutParams: { returnTo: window.location.origin } })
+                }
+              >
+                <span className="fa fa-user-plus me-1"></span>
+                Log Out
+              </button>
+            ) : (
+              <button
+                className="btn btn-outline-primary ms-auto"
+                onClick={() => loginWithRedirect()}
+              >
+                <span className="fa fa-sign-in me-1"></span>
+                Log In
+              </button>
+            )}
+
             <CartBtn />
           </div>
         </div>
